@@ -8,6 +8,11 @@ Height = 500  # 界面高度
 Xh = 0  # 记录前一个贝塞尔函数的手柄
 Yh = 0
  
+"""
+Ref: 
+Bezier curve實作: https://blog.csdn.net/liuzubing/article/details/96894051
+wiki有Bezier curve遞迴公式: https://zh.wikipedia.org/wiki/%E8%B2%9D%E8%8C%B2%E6%9B%B2%E7%B7%9A
+"""
 def Bezier(p1, p2, t):  # 一阶贝塞尔函数
     return p1 * (1 - t) + p2 * t
  
@@ -41,21 +46,6 @@ def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):  # 三阶贝塞尔函数
         te.goto(x, y)
     te.penup()
 
- 
-def vertical(dy):  # 做到相对纵坐标为dy的垂直线
-    te.seth(-90)
-    te.pendown()
-    te.fd(dy)
-    te.penup()
-    te.seth(0)
- 
-def polyline(x1, y1, x2, y2, x3, y3):  # 做svg坐标下的折线
-    te.penup()
-    te.goto(-Width / 2 + x1, Height / 2 - y1)
-    te.pendown()
-    te.goto(-Width / 2 + x2, Height / 2 - y2)
-    te.goto(-Width / 2 + x3, Height / 2 - y3)
-    te.penup()
  
 def Curveto(x1, y1, x2, y2, x, y):  # 三阶贝塞尔曲线到（x，y）
     te.penup()
@@ -160,7 +150,7 @@ te.end_fill()
 TE_Draw.moveTo(195, 49)
 te.begin_fill()
 te.pencolor("#D3DFF0")
-polyline(195, 49, 175.5, 106.5, 202.522, 49)
+TE_Draw.polyline([(195, 49), (175.5, 106.5), (202.522, 49)])
 te.pencolor("black")
 TE_Draw.horizontalTo(195)
 te.pencolor("#D3DFF0")
@@ -189,7 +179,7 @@ TE_Draw.line(340.023, 49, 360.5, 144)
 # TE_Draw.line(353.5,47.5,395.5,208.5)
 TE_Draw.line(478.5, 95.5, 518.5, 161.5)
 TE_Draw.line(518.5, 332.5, 460.5, 359.5)
-polyline(506.5, 369.5, 493.5, 402.5, 502.5, 443.5)
+TE_Draw.polyline([(506.5, 369.5), (493.5, 402.5), (502.5, 443.5)])
 TE_Draw.moveTo(530, 429)
 curveto_r(4, 16, -5, 33, -5, 33)
 
@@ -238,9 +228,9 @@ curveto_r(-5, -5, -22, -53, -23, -70)
 TE_Draw.lineRel(32, -13)
 curveto_r(3, -25, 6, -28, 12, -36)
 smooth_r(13, -12, 16, -12)
-vertical(-2)
+TE_Draw.verticalRel(-2)
 curveto_r(45, 20, 64, 14, 94, 1)
-vertical(2)
+TE_Draw.verticalRel(2)
 curveto_r(8, -2, 15, 2, 17, 4)
 smooth_r(0, 6, -2, 9)
 curveto_r(10, 10, 10, 29, 11, 33)
@@ -254,11 +244,11 @@ te.end_fill()
 te.color("black", "#968281")  # 脖子
 TE_Draw.moveTo(262, 329)
 te.begin_fill()
-vertical(17)
+TE_Draw.verticalRel(17)
 curveto_r(1, 2, 44, 14, 45, 15)
 smooth_r(3, 12, 3, 12)
 TE_Draw.horizontalRel(3)
-vertical(-5)
+TE_Draw.verticalRel(-5)
 curveto_r(1, -3, 4, -6, 5, -7)
 TE_Draw.lineRel(36, -14)
 curveto_r(1, -1, 3, -16, 2, -17)
@@ -421,8 +411,7 @@ te.end_fill()
  
 te.penup()
 te.begin_fill()
-polyline(349, 180, 353, 203, 361, 203)
-polyline(361, 203, 362, 188, 349, 180)
+TE_Draw.polyline([(349, 180), (353, 203), (361, 203), (362, 188), (349, 180)])
 te.end_fill()
 
 # 图层_13
@@ -499,7 +488,7 @@ te.end_fill()
 TE_Draw.moveTo(392, 209)
 te.begin_fill()
 TE_Draw.lineRel(4, 3)
-vertical(4)
+TE_Draw.verticalRel(4)
 TE_Draw.lineRel(-4, 2)
 Curveto(386, 214, 392, 209, 392, 209)
 te.end_fill()
@@ -511,7 +500,7 @@ te.begin_fill()
 smooth_r(2, -5, 6, -4)
 smooth_r(18, 13, 27, 1)
 curveto_r(3, 0, 5, 3, 5, 3)
-vertical(13)
+TE_Draw.verticalRel(13)
 TE_Draw.horizontalTo(224)
 TE_Draw.lineTo(219, 229)
 te.end_fill()

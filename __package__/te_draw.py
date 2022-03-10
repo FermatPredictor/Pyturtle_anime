@@ -69,44 +69,51 @@ class TE_Draw():
         TE_Draw.moveTo(x1, y1)
         TE_Draw.lineTo(x2, y2)
 
-     
+    @staticmethod
     def lineRel(dx, dy): 
         # 連接當前點和相對坐標（dx，dy）的點
         te.pendown()
         te.goto(te.xcor() + dx, te.ycor() - dy)
         te.penup()
-     
+    
+    @staticmethod
     def lineTo(x, y):
         # 連接當前點svg坐標（x，y）
         te.pendown()
         te.goto(*TE_Draw.svg_to_Cart(x,y))
         te.penup()
-     
+    
+    @staticmethod
     def horizontalTo(x): 
         # 畫水平線到x座標
         te.pendown()
         te.setx(x - TE_Draw.Width / 2)
         te.penup()
-     
+    
+    @staticmethod
     def horizontalRel(dx):  
         # 畫水平線到相對位置dx
         TE_Draw.lineRel(dx, 0)
-        
-#     
-#    def vertical(dy):  # 做到相对纵坐标为dy的垂直线
-#        te.seth(-90)
-#        te.pendown()
-#        te.fd(dy)
-#        te.penup()
-#        te.seth(0)
-#     
-#    def polyline(x1, y1, x2, y2, x3, y3):  # 做svg坐标下的折线
-#        te.penup()
-#        te.goto(-Width / 2 + x1, Height / 2 - y1)
-#        te.pendown()
-#        te.goto(-Width / 2 + x2, Height / 2 - y2)
-#        te.goto(-Width / 2 + x3, Height / 2 - y3)
-#        te.penup()
+    
+    @staticmethod
+    def verticalTo(y):
+        # 畫垂直線到y座標
+        te.pendown()
+        te.sety(y + TE_Draw.Height / 2)
+        te.penup()
+    
+    @staticmethod
+    def verticalRel(dy):
+        # 畫垂直線到相對位置dy
+        TE_Draw.lineRel(0, dy)
+    
+    @staticmethod
+    def polyline(points):
+        # 畫svg坐標下的折線
+        assert points
+        TE_Draw.moveTo(*points[0])
+        for i in range(1, len(points)):
+            TE_Draw.lineTo(*points[i])
 #     
 #    def Curveto(x1, y1, x2, y2, x, y):  # 三阶贝塞尔曲线到（x，y）
 #        te.penup()
@@ -156,6 +163,9 @@ if __name__=='__main__':
     TE_Draw.moveTo(300,300)
     TE_Draw.line(100,200,100,100)
     TE_Draw.horizontalTo(300)
+    TE_Draw.verticalRel(-30)
     TE_Draw.moveTo(300,400)
     TE_Draw.horizontalRel(-100)
+    TE_Draw.polyline([(195, 49), (175.5, 106.5), (202.522, 49)])
+    TE_Draw.verticalTo(0)
     te.done()
