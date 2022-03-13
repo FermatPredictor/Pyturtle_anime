@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import turtle as te
+import numpy as np
 te.TurtleScreen._RUNNING = True
 
 class TE_Draw():
@@ -12,41 +13,54 @@ class TE_Draw():
     Speed = 5
     Width = 600  # 界面宽度
     Height = 500  # 界面高度
-    Xh = 0  # 记录前一个贝塞尔函数的手柄
-    Yh = 0
-     
-#    def Bezier(p1, p2, t):  # 一阶贝塞尔函数
-#        return p1 * (1 - t) + p2 * t
-#     
-#    def Bezier_2(x1, y1, x2, y2, x3, y3):  # 二阶贝塞尔函数
-#        te.goto(x1, y1)
-#        te.pendown()
-#        for t in range(0, WriteStep + 1):
-#            x = Bezier(Bezier(x1, x2, t / WriteStep),
-#                       Bezier(x2, x3, t / WriteStep), t / WriteStep)
-#            y = Bezier(Bezier(y1, y2, t / WriteStep),
-#                       Bezier(y2, y3, t / WriteStep), t / WriteStep)
-#            te.goto(x, y)
-#        te.penup()
-#     
-#    def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):  # 三阶贝塞尔函数
-#        x1 = -Width / 2 + x1
-#        y1 = Height / 2 - y1
-#        x2 = -Width / 2 + x2
-#        y2 = Height / 2 - y2
-#        x3 = -Width / 2 + x3
-#        y3 = Height / 2 - y3
-#        x4 = -Width / 2 + x4
-#        y4 = Height / 2 - y4  # 坐标变换
-#        te.goto(x1, y1)
-#        te.pendown()
-#        for t in range(0, WriteStep + 1):
-#            x = Bezier(Bezier(Bezier(x1, x2, t / WriteStep), Bezier(x2, x3, t / WriteStep), t / WriteStep),
-#                       Bezier(Bezier(x2, x3, t / WriteStep), Bezier(x3, x4, t / WriteStep), t / WriteStep), t / WriteStep)
-#            y = Bezier(Bezier(Bezier(y1, y2, t / WriteStep), Bezier(y2, y3, t / WriteStep), t / WriteStep),
-#                       Bezier(Bezier(y2, y3, t / WriteStep), Bezier(y3, y4, t / WriteStep), t / WriteStep), t / WriteStep)
-#            te.goto(x, y)
-#        te.penup()
+    
+    @staticmethod
+    def _one_bezier(p1, p2, t):
+        # 一階貝茲曲線，由兩點連成的直線，t屬於實數[0,1]區間，其中point為np.array
+        return p1 * (1 - t) + p2 * t
+    
+    @staticmethod
+    def _bezier(points, t):
+        """
+        n階貝茲曲線，t屬於實數[0,1]區間，實作方法參考
+        wiki的遞迴公式: https://zh.wikipedia.org/wiki/%E8%B2%9D%E8%8C%B2%E6%9B%B2%E7%B7%9A，
+        回傳一個座標點
+        """
+        assert 2<=len(points)<=6, "only support 2~6 points bezier curve"
+        if len(points)==2:
+            return TE_Draw._one_bezier(points[0], points[1], t)
+        return (1 - t) * TE_Draw._bezier(points[:-1], t) +  t * TE_Draw._bezier(points[1:], t)
+    
+    @staticmethod
+    def draw_bezier(points):
+        """
+        給定k個points, 以svg座標表示，畫出k-1階的beziercurve
+        """
+        TE_Draw.moveTo(*points[0])
+        for t in range(0, TE_Draw.WriteStep + 1):
+            x, y = TE_Draw._bezier(np.array(points), t / TE_Draw.WriteStep)
+            TE_Draw.lineTo(x, y)
+        
+    @staticmethod
+    def curveTo(points):
+        """
+        從當前點出發，依points方向畫bezier curve
+        """
+        TE_Draw.draw_bezier([TE_Draw.cur_svg()] + points)
+        
+    @staticmethod
+    def curveRel(points):
+        """
+        從當前點為基準，依相對坐標畫bezier curve
+        """
+        cur_x, cur_y = TE_Draw.cur_svg()
+        TE_Draw.draw_bezier([(cur_x, cur_y)] + [(cur_x+x, cur_y+y) for x,y in points])
+
+    
+    @staticmethod
+    def cur_svg():
+        # 取得畫筆當前點的svg座標
+        return te.xcor() + TE_Draw.Width/2,  TE_Draw.Height / 2 - te.ycor()
     
     @staticmethod
     def svg_to_Cart(x,y):
@@ -72,10 +86,10 @@ class TE_Draw():
     @staticmethod
     def lineRel(dx, dy): 
         # 連接當前點和相對坐標（dx，dy）的點
-        te.pendown()
-        te.goto(te.xcor() + dx, te.ycor() - dy)
-        te.penup()
-    
+        cur_x, cur_y = TE_Draw.cur_svg()
+        TE_Draw.line(cur_x, cur_y, cur_x+dx, cur_y+dy)
+
+
     @staticmethod
     def lineTo(x, y):
         # 連接當前點svg坐標（x，y）
@@ -114,51 +128,10 @@ class TE_Draw():
         TE_Draw.moveTo(*points[0])
         for i in range(1, len(points)):
             TE_Draw.lineTo(*points[i])
-#     
-#    def Curveto(x1, y1, x2, y2, x, y):  # 三阶贝塞尔曲线到（x，y）
-#        te.penup()
-#        X_now = te.xcor() + Width / 2
-#        Y_now = Height / 2 - te.ycor()
-#        Bezier_3(X_now, Y_now, x1, y1, x2, y2, x, y)
-#        global Xh
-#        global Yh
-#        Xh = x - x2
-#        Yh = y - y2
-#     
-#    def curveto_r(x1, y1, x2, y2, x, y):  # 三阶贝塞尔曲线到相对坐标（x，y）
-#        te.penup()
-#        X_now = te.xcor() + Width / 2
-#        Y_now = Height / 2 - te.ycor()
-#        Bezier_3(X_now, Y_now, X_now + x1, Y_now + y1,
-#                 X_now + x2, Y_now + y2, X_now + x, Y_now + y)
-#        global Xh
-#        global Yh
-#        Xh = x - x2
-#        Yh = y - y2
-#     
-#    def Smooth(x2, y2, x, y):  # 平滑三阶贝塞尔曲线到（x，y）
-#        global Xh
-#        global Yh
-#        te.penup()
-#        X_now = te.xcor() + Width / 2
-#        Y_now = Height / 2 - te.ycor()
-#        Bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh, x2, y2, x, y)
-#        Xh = x - x2
-#        Yh = y - y2
-#     
-#    def smooth_r(x2, y2, x, y):  # 平滑三阶贝塞尔曲线到相对坐标（x，y）
-#        global Xh
-#        global Yh
-#        te.penup()
-#        X_now = te.xcor() + Width / 2
-#        Y_now = Height / 2 - te.ycor()
-#        Bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh,
-#                 X_now + x2, Y_now + y2, X_now + x, Y_now + y)
-#        Xh = x - x2
-#        Yh = y - y2
+
 
 if __name__=='__main__':
-    te.speed('slowest')
+    te.speed('slow')
     te.setup(TE_Draw.Width, TE_Draw.Height, 0, 0)
     TE_Draw.moveTo(300,300)
     TE_Draw.line(100,200,100,100)
@@ -168,4 +141,6 @@ if __name__=='__main__':
     TE_Draw.horizontalRel(-100)
     TE_Draw.polyline([(195, 49), (175.5, 106.5), (202.522, 49)])
     TE_Draw.verticalTo(0)
+    TE_Draw.draw_bezier([(90, 200), (150, 250), (250,350),(100,400)])
+    TE_Draw.curveRel([(100, -50), (200, 0)])
     te.done()

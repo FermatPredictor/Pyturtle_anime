@@ -5,8 +5,6 @@ from __package__.te_draw import TE_Draw
 WriteStep = 15  # 贝塞尔函数的取样次数
 Width = 600  # 界面宽度
 Height = 500  # 界面高度
-Xh = 0  # 记录前一个贝塞尔函数的手柄
-Yh = 0
  
 """
 Ref: 
@@ -47,61 +45,29 @@ def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):  # 三阶贝塞尔函数
     te.penup()
 
  
-def Curveto(x1, y1, x2, y2, x, y):  # 三阶贝塞尔曲线到（x，y）
-    te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
-    Bezier_3(X_now, Y_now, x1, y1, x2, y2, x, y)
-    global Xh
-    global Yh
-    Xh = x - x2
-    Yh = y - y2
- 
 def curveto_r(x1, y1, x2, y2, x, y):  # 三阶贝塞尔曲线到相对坐标（x，y）
     te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
+    X_now, Y_now = TE_Draw.cur_svg()
     Bezier_3(X_now, Y_now, X_now + x1, Y_now + y1,
              X_now + x2, Y_now + y2, X_now + x, Y_now + y)
-    global Xh
-    global Yh
-    Xh = x - x2
-    Yh = y - y2
- 
-def Smooth(x2, y2, x, y):  # 平滑三阶贝塞尔曲线到（x，y）
-    global Xh
-    global Yh
-    te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
-    Bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh, x2, y2, x, y)
-    Xh = x - x2
-    Yh = y - y2
  
 def smooth_r(x2, y2, x, y):  # 平滑三阶贝塞尔曲线到相对坐标（x，y）
-    global Xh
-    global Yh
-    te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
-    Bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh,
-             X_now + x2, Y_now + y2, X_now + x, Y_now + y)
-    Xh = x - x2
-    Yh = y - y2
+    curveto_r(0,0, x2, y2, x, y)
+
  
 te.tracer(10)#用這行可瞬間作畫
 te.setup(Width, Height, 0, 0)
 te.pensize(1)
-te.speed('slowest')
+te.speed('slow')
 te.penup()
  
 # 图层_2
 te.color("black", "#F2F2F2")  # 外套
 TE_Draw.moveTo(61, 462)
 te.begin_fill()
-smooth_r(12, -41, 27, -58)
-curveto_r(-6, -36, 6, -118, 9, -132)
-curveto_r(-15, -27, -23, -51, -26, -74)
+TE_Draw.curveRel([(12, -41), (27, -58)])
+TE_Draw.curveRel([(-6, -36), (6, -118),(9, -132)])
+TE_Draw.curveRel([(-15, -27), (-23, -51),(-26, -74)])
 curveto_r(4, -66, 38, -105, 65, -149)
 TE_Draw.horizontalTo(486)
 curveto_r(12, 24, 40, 99, 33, 114)
@@ -112,10 +78,9 @@ TE_Draw.lineRel(50, 92)
 TE_Draw.horizontalTo(445)
 smooth_r(-29, -38, -31, -46)
 smooth_r(78, -107, 72, -119)
-Smooth(355, 178, 340, 176)
-Smooth(272, 63, 264, 64)
+TE_Draw.curveTo([(355, 178), (340, 176), (272, 63), (264, 64)])
 smooth_r(-29, 67, -27, 73)
-Curveto(99, 292, 174, 428, 173, 439)
+TE_Draw.curveTo([(99, 292), (174, 428), (173, 439)])
 smooth_r(-8, 23, -8, 23)
 TE_Draw.lineTo(61, 462)
 te.end_fill()
@@ -140,7 +105,7 @@ curveto_r(0, 0, -29, -36, -31, -46)
 smooth_r(53.59, -82.337, 53.59, -82.337)
 te.pencolor("#D3DFF0")
 smooth_r(86.41, -47.663, 96.072, -54.85)
-Curveto(563.5, 297.5, 570.5, 299.5, 518.5, 334)
+TE_Draw.curveTo([(563.5, 297.5), (570.5, 299.5), (518.5, 334)])
 te.pencolor("black")
 curveto_r(-2, 16, -12, 33, -12, 37)
 smooth_r(50, 92, 50, 93)
@@ -191,7 +156,7 @@ te.begin_fill()
 TE_Draw.horizontalTo(165)
 smooth_r(9, -15, 8, -25)
 curveto_r(-47, -126, 6, -212, 12, -225)
-Curveto(185, 305, 202, 428, 225, 462)
+TE_Draw.curveTo([(185, 305), (202, 428), (225, 462)])
 TE_Draw.lineTo(225, 462)
 te.end_fill()
 
@@ -252,7 +217,7 @@ TE_Draw.verticalRel(-5)
 curveto_r(1, -3, 4, -6, 5, -7)
 TE_Draw.lineRel(36, -14)
 curveto_r(1, -1, 3, -16, 2, -17)
-Curveto(318, 348, 296, 344, 262, 329)
+TE_Draw.curveTo([(318, 348), (296, 344), (262, 329)])
 te.end_fill()
 
 
@@ -308,7 +273,7 @@ smooth_r(-9, 14, -12, 14)
 smooth_r(-7, -12, -14, -15)
 curveto_r(-19, -2, -41, -25, -41, -25)
 smooth_r(-10, -26, -10, -30)
-Smooth(255, 332, 262, 331)
+TE_Draw.curveTo([(255, 332), (262, 331)])
 te.end_fill()
 
  
@@ -335,7 +300,7 @@ curveto_r(21, 5, 39, -10, 44, -13)
 curveto_r(5, -20, 1, -21, 0, -24)
 curveto_r(-18, -2, -49, 15, -52, 17)
 smooth_r(-11, -3, -15, -1)
-Smooth(252, 356, 247, 358)
+TE_Draw.curveTo([(252, 356), (247, 358)])
 te.end_fill()
 
 # 图层_10
@@ -344,7 +309,7 @@ TE_Draw.moveTo(297, 387)
 te.begin_fill()
 TE_Draw.lineRel(-11, 6)
 curveto_r(-1, 0, -20, -7, -30, -19)
-Curveto(259, 373, 297, 385, 297, 387)
+TE_Draw.curveTo([(259, 373), (297, 385), (297, 387)])
 te.end_fill()
  
 TE_Draw.moveTo(323, 384)
@@ -352,7 +317,7 @@ te.begin_fill()
 TE_Draw.lineRel(8, 7)
 TE_Draw.lineRel(30, -14)
 curveto_r(1, -1, 5, -6, 4, -7)
-Smooth(329, 379, 323, 384)
+TE_Draw.curveTo([(329, 379), (323, 384)])
 te.end_fill()
 
 # 图层_11
@@ -366,7 +331,7 @@ smooth_r(76, 53, 86, 60)
 curveto_r(0, 65, -27, 75, -31, 76)
 curveto_r(-50, 28, -70, 30, -85, 30)
 smooth_r(-77, -22, -86, -26)
-Curveto(180, 302, 186, 228, 185, 212)
+TE_Draw.curveTo([(180, 302), (186, 228), (185, 212)])
 te.end_fill()
 
 # 图层_12
@@ -375,7 +340,7 @@ TE_Draw.moveTo(189, 202)
 te.begin_fill()
 curveto_r(-1, 22, 19, 51, 19, 51)
 smooth_r(-10, -42, 7, -92)
-Curveto(212, 168, 196, 189, 189, 202)
+TE_Draw.curveTo([(212, 168), (196, 189), (189, 202)])
 te.end_fill()
 
  
@@ -397,7 +362,7 @@ curveto_r(-4, 5, 14, 100, 14, 100)
 smooth_r(-6, -79, -5, -85)
 curveto_r(0, 98, 49, 139, 49, 139)
 smooth_r(8, -50, 3, -65)
-Smooth(272, 64, 264, 64)
+TE_Draw.curveTo([(272, 64), (264, 64)])
 te.end_fill()
 
  
@@ -434,7 +399,7 @@ te.pencolor("#D1D1D1")
 te.pensize(1)
 smooth_r(2, 27, -1, 30)
 smooth_r(-39, 5, -44, 1)
-Smooth(206, 212, 206, 212)
+TE_Draw.curveTo([(206, 212), (206, 212)])
 te.end_fill()
 
  
@@ -462,7 +427,7 @@ te.begin_fill()
 curveto_r(-1, 5, 0, 26, 7, 35)
 smooth_r(30, 2, 33, 0)
 smooth_r(5, -31, 2, -34)
-Smooth(219, 203, 216, 206)
+TE_Draw.curveTo([(219, 203), (216, 206)])
 te.end_fill()
 
  
@@ -472,7 +437,7 @@ curveto_r(-2, 1, 2, 29, 4, 31)
 smooth_r(30, 3, 33, 1)
 smooth_r(6, -24, 4, -27)
 TE_Draw.lineRel(-11, -8)
-Curveto(382, 204, 357, 206, 354, 207)
+TE_Draw.curveTo([(382, 204), (357, 206), (354, 207)])
 te.end_fill()
 
  
@@ -481,7 +446,7 @@ te.color("#F5F5F5", "#F5F5F5")  # 眼睛3
 TE_Draw.moveTo(253, 211)
 te.begin_fill()
 curveto_r(-3, 0, -8, 8, 1, 10)
-Smooth(258, 210, 253, 211)
+TE_Draw.curveTo([(258, 210), (253, 211)])
 te.end_fill()
 
  
@@ -490,7 +455,7 @@ te.begin_fill()
 TE_Draw.lineRel(4, 3)
 TE_Draw.verticalRel(4)
 TE_Draw.lineRel(-4, 2)
-Curveto(386, 214, 392, 209, 392, 209)
+TE_Draw.curveTo([(386, 214), (392, 209), (392, 209)])
 te.end_fill()
 
 # 图层_18
@@ -513,7 +478,7 @@ smooth_r(10, 13, 19, 1)
 curveto_r(6, 0, 8, 6, 8, 6)
 TE_Draw.lineRel(-2, 9)
 curveto_r(-12, 3, -29, 0, -32, -2)
-Smooth(357, 227, 357, 227)
+TE_Draw.lineTo(357, 227)
 te.end_fill()
 
 # 图层_19
@@ -523,7 +488,7 @@ te.begin_fill()
 curveto_r(-6, 0, -5, 5, -3, 8)
 smooth_r(24, 2, 27, 0)
 smooth_r(0, -8, -1, -8)
-Smooth(234, 231, 227, 231)
+TE_Draw.curveTo([(234, 231), (227, 231)])
 te.end_fill()
 
  
@@ -532,7 +497,7 @@ te.begin_fill()
 curveto_r(2, 18, 26, 14, 30, 6)
 smooth_r(-1, -3, -2, -4)
 smooth_r(-15, 9, -24, -4)
-Curveto(363, 224, 361, 225, 361, 227)
+TE_Draw.curveTo([(363, 224), (361, 225), (361, 227)])
 te.end_fill()
 
  
