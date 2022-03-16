@@ -10,7 +10,6 @@ class TE_Draw():
     x軸正方向是向右，y軸正方向是向下。
     """
     WriteStep = 15  # 贝塞尔函数的取样次数
-    Speed = 5
     Width = 600  # 界面宽度
     Height = 500  # 界面高度
     
