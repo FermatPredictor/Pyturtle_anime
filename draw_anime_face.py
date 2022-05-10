@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import turtle as te
 import time
-from __package__.te_draw import TE_Draw
+from __package__.te_draw import TE_Draw, RandDraw
  
 te.tracer(10)#用這行可瞬間作畫
 te.setup(TE_Draw.Width, TE_Draw.Height, 0, 0)
@@ -68,10 +68,21 @@ def eye(x,y):
     te.circle(-15)
     te.end_fill()
     
+def hair(x,y):
+    """
+    給定頭髮左上角位置，畫出髮型
+    """
+    RandDraw.rand_curve((x-20, y+40),(x+30, y-50))
+    RandDraw.rand_curve((x+30, y-50), (x+180, y-50), dy =(50,0))
+    
+    
+    
 
 face(285, 312)
 eye(206, 162)
 eye(302, 164)
+
+hair(200, 100)
 
 # 鼻子、嘴
 te.pencolor("black")

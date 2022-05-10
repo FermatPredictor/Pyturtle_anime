@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import turtle as te
 import numpy as np
+from random import randint
 te.TurtleScreen._RUNNING = True
 
 class TE_Draw():
@@ -127,6 +128,29 @@ class TE_Draw():
         TE_Draw.moveTo(*points[0])
         for i in range(1, len(points)):
             TE_Draw.lineTo(*points[i])
+
+class RandDraw():
+    """
+    隨機作畫工具
+    """
+    
+    @staticmethod
+    def rand_curve(p1, p2, dx=(0,0), dy=(0,0)):
+        """
+        dx: 希望往左、右random的偏移量
+        dy: 希望往上、下random的偏移量
+        """
+        mx, Mx = min(p1[0],p2[0]), max(p1[0],p2[0])
+        my, My = min(p1[1],p2[1]), max(p1[1],p2[1])
+        colors = ["red", "blue", "green"]
+        for color in colors:
+            te.pencolor(color)
+            rand_pt = (randint(int(mx-dx[0]), int(Mx+dx[1])), randint(int(my-dy[0]), int(My+dy[1])))
+            print(f"Random曲線{color}: TE_Draw.draw_bezier([{p1},{rand_pt}, {p2}])")
+            TE_Draw.draw_bezier([p1,rand_pt, p2])
+        print()
+    
+    
 
 
 if __name__=='__main__':
