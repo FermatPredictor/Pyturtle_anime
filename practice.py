@@ -72,12 +72,19 @@ def hair(x,y):
     """
     給定頭髮左上角位置，畫出髮型
     """
-    RandDraw.rand_curve((x-20, y+40),(x+30, y-50))
-    RandDraw.rand_curve((x+30, y-50), (x+180, y-50), dy =(50,0))
+    te.color((233,200,183))
+    te.begin_fill()
+    TE_Draw.draw_bezier([(x-20, y+40),(x+10,y-38),(x+30, y-50)])
+    TE_Draw.draw_bezier([(x+30, y-50),(x+82,y-98),(x+180, y-50)])
+    TE_Draw.draw_bezier([(x+180, y-50),(x+167, y-24),(x+150, y-20)])
+    TE_Draw.draw_bezier([(x+150, y-20),(x+187, y-13),(x+190, y+30)])
+    TE_Draw.draw_bezier([(x+190, y+30), (x+33, y+29), (x-20, y+40)])
+    te.end_fill()
+    #RandDraw.rand_curve((x+30, y-50), (x+180, y-50), dy =(50,0))
     
     
     
-
+te.colormode(255)
 face(285, 312)
 eye(206, 162)
 eye(302, 164)
