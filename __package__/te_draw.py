@@ -135,23 +135,23 @@ class RandDraw():
     """
     
     @staticmethod
-    def rand_curve(p1, p2, dx=(0,0), dy=(0,0)):
+    def rand_curve(p1, p2, cx=(0,0), cy=(0,0), dx=(0,0), dy=(0,0)):
         """
-        dx: 希望往左、右random的偏移量
-        dy: 希望往上、下random的偏移量
+        cx, cy: 曲線的折點希望往左、右/上、下random的偏移量區間
+        dx, dy: 終點希望往左、右/上、下random的偏移量區間
         """
-        mx, Mx = min(p1[0],p2[0]), max(p1[0],p2[0])
-        my, My = min(p1[1],p2[1]), max(p1[1],p2[1])
         colors = ["red", "blue", "green"]
         for color in colors:
             te.pencolor(color)
-            rand_pt = (randint(int(mx-dx[0]), int(Mx+dx[1])), randint(int(my-dy[0]), int(My+dy[1])))
-            print(f"Random曲線{color}: TE_Draw.draw_bezier([{p1},{rand_pt}, {p2}])")
-            TE_Draw.draw_bezier([p1,rand_pt, p2])
+            pt = (p2[0]+randint(int(dx[0]), int(dx[1])), p2[1]+randint(int(dy[0]), int(dy[1])))
+            mx, Mx = min(p1[0],pt[0]), max(p1[0],pt[0])
+            my, My = min(p1[1],pt[1]), max(p1[1],pt[1])
+            rand_pt = (randint(int(mx+cx[0]), int(Mx+cx[1])), randint(int(my+cy[0]), int(My+cy[1])))
+            print(f"Random曲線{color}: TE_Draw.draw_bezier([{p1},{rand_pt}, {pt}])")
+            TE_Draw.draw_bezier([p1,rand_pt, pt])
         print()
     
     
-
 
 if __name__=='__main__':
     te.speed('slow')
