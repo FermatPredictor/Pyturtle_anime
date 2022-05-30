@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import turtle as te
 import time
-from __package__.te_draw import TE_Draw, RandDraw
+from __package__.te_draw import TE_Draw, RandDraw, RandAnime
  
 te.tracer(10)#用這行可瞬間作畫
 te.setup(TE_Draw.Width, TE_Draw.Height, 0, 0)
@@ -70,14 +70,13 @@ def eye(x,y):
     
 def hair():
     pt = (280,50)
-    p2 = (pt[0]-60, pt[1]+20)
-    p3 = (pt[0]+60, pt[1]+20)
-    for _ in range(12):
-        RandDraw.rand_curve(pt, pt, cy=(-10,-10), dx=(-150,150), dy=(50,120))
-    for _ in range(5):
-        RandDraw.rand_curve(p2, p2, cx=(-30,-20), dx=(-50,0), dy=(80,200))
-    for _ in range(5):
-        RandDraw.rand_curve(p3, p3, cx=(20,30), dx=(0,50), dy=(80,200))
+    RandAnime.hair(pt)
+#    p2 = (pt[0]-60, pt[1]+20)
+#    p3 = (pt[0]+60, pt[1]+20)
+#    for _ in range(5):
+#        RandDraw.rand_curve(p2, p2, cx=(-30,-20), dx=(-50,0), dy=(80,200))
+#    for _ in range(5):
+#        RandDraw.rand_curve(p3, p3, cx=(20,30), dx=(0,50), dy=(80,200))
 
     
 

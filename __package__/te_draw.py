@@ -135,6 +135,17 @@ class RandDraw():
     """
     
     @staticmethod
+    def rand_pt_between(p1, p2, cx=(0,0), cy=(0,0)):
+        """
+        給定兩點，隨機產生範圍內一點
+        cx, cy: 曲線的折點希望往左、右/上、下random的偏移量區間
+        """
+        mx, Mx = min(p1[0],p2[0]), max(p1[0],p2[0])
+        my, My = min(p1[1],p2[1]), max(p1[1],p2[1])
+        return (randint(int(mx+cx[0]), int(Mx+cx[1])), randint(int(my+cy[0]), int(My+cy[1])))
+        
+    
+    @staticmethod
     def rand_curve(p1, p2, cx=(0,0), cy=(0,0), dx=(0,0), dy=(0,0)):
         """
         cx, cy: 曲線的折點希望往左、右/上、下random的偏移量區間
@@ -144,13 +155,41 @@ class RandDraw():
         for color in colors:
             te.pencolor(color)
             pt = (p2[0]+randint(int(dx[0]), int(dx[1])), p2[1]+randint(int(dy[0]), int(dy[1])))
-            mx, Mx = min(p1[0],pt[0]), max(p1[0],pt[0])
-            my, My = min(p1[1],pt[1]), max(p1[1],pt[1])
-            rand_pt = (randint(int(mx+cx[0]), int(Mx+cx[1])), randint(int(my+cy[0]), int(My+cy[1])))
+            rand_pt = RandDraw.rand_pt_between(p1, pt, cx, cy)
             print(f"Random曲線{color}: TE_Draw.draw_bezier([{p1},{rand_pt}, {pt}])")
             TE_Draw.draw_bezier([p1,rand_pt, pt])
         print()
+
+
+class RandAnime():
+    """
+    (開發中)隨機作畫動漫人物工具
+    """
     
+    @staticmethod
+    def hair(point):
+        """
+        point: 頭頂位置
+        """
+        x, y = point
+        te.pencolor("dimgray")
+        te.fillcolor("whitesmoke")
+        for _ in range(5):
+            rand_t_pt = (randint(int(x-150), int(x)), randint(int(y+50), int(y+100)))
+            rand_cur_pt = [RandDraw.rand_pt_between(point, rand_t_pt, cx=(-20,-20)),
+                           RandDraw.rand_pt_between(point, rand_t_pt)]
+            te.begin_fill()
+            TE_Draw.draw_bezier([point, rand_cur_pt[0], rand_t_pt])
+            TE_Draw.draw_bezier([rand_t_pt, rand_cur_pt[1], point])
+            te.end_fill()
+        for _ in range(5):
+            rand_t_pt = (randint(int(x), int(x+150)), randint(int(y+50), int(y+100)))
+            rand_cur_pt = [RandDraw.rand_pt_between(point, rand_t_pt),
+                           RandDraw.rand_pt_between(point, rand_t_pt, cx=(10,10))]
+            te.begin_fill()
+            TE_Draw.draw_bezier([point, rand_cur_pt[0], rand_t_pt])
+            TE_Draw.draw_bezier([rand_t_pt, rand_cur_pt[1], point])
+            te.end_fill()
     
 
 if __name__=='__main__':
