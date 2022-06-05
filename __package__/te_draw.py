@@ -2,6 +2,7 @@
 import turtle as te
 import numpy as np
 from random import randint
+from itertools import accumulate
 te.TurtleScreen._RUNNING = True
 
 class TE_Draw():
@@ -85,12 +86,12 @@ class TE_Draw():
         for i in range(1, len(points)):
             TE_Draw.lineTo(*points[i])
 
-
     @staticmethod
-    def lineRel(dx, dy): 
-        # 連接當前點和相對坐標（dx，dy）的點
-        cur_x, cur_y = TE_Draw.cur_svg()
-        TE_Draw.line([(cur_x, cur_y), (cur_x+dx, cur_y+dy)])
+    def lineRel(points):
+        """
+        從當前點為基準，依相對坐標畫折線
+        """
+        TE_Draw.line(list(accumulate([TE_Draw.cur_svg()]+points, func=lambda p1, p2: (p1[0]+p2[0], p1[1]+p2[1]))))
 
 
     @staticmethod
@@ -110,7 +111,7 @@ class TE_Draw():
     @staticmethod
     def horizontalRel(dx):  
         # 畫水平線到相對位置dx
-        TE_Draw.lineRel(dx, 0)
+        TE_Draw.lineRel([(dx, 0)])
     
     @staticmethod
     def verticalTo(y):
@@ -122,7 +123,7 @@ class TE_Draw():
     @staticmethod
     def verticalRel(dy):
         # 畫垂直線到相對位置dy
-        TE_Draw.lineRel(0, dy)
+        TE_Draw.lineRel([(0, dy)])
     
 
 class RandDraw():

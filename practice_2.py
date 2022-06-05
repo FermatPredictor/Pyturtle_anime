@@ -18,12 +18,10 @@ def face(x,y):
     te.color("black", "#F3EEEB")
     te.begin_fill()
     TE_Draw.moveTo(x,y)
-    TE_Draw.lineRel(-70, -45)
-    TE_Draw.lineRel(-30, -120)
+    TE_Draw.lineRel([(-70, -45),(-30, -120)])
     te.setheading(90)
     te.circle(-100, extent=180)
-    TE_Draw.lineRel(-30, 120)
-    TE_Draw.lineRel(-70, 45)
+    TE_Draw.lineRel([(-30, 120), (-70, 45)])
     te.end_fill()
     
 def eye(x,y):
@@ -34,7 +32,7 @@ def eye(x,y):
     te.pensize(2)
     TE_Draw.moveTo(x,y)
     te.begin_fill()
-    TE_Draw.lineRel(15, -7)
+    TE_Draw.lineRel([(15, -7)])
     TE_Draw.curveRel([(4, -1), (26, -2), (30, 0)])
     TE_Draw.curveRel([(10, 3), (12, 7)])
     
@@ -48,9 +46,7 @@ def eye(x,y):
     
     TE_Draw.moveTo(x+10,y-2)
     te.begin_fill()
-    TE_Draw.lineRel(45, 0)
-    TE_Draw.lineRel(-2, 33)
-    TE_Draw.lineRel(-36, 0)
+    TE_Draw.lineRel([(45, 0), (-2, 33), (-36,0)])
     TE_Draw.lineTo(x+10,y-2)
     te.end_fill()
     
