@@ -70,13 +70,7 @@ def eye(x,y):
     
 def hair():
     pt = (280,50)
-    RandAnime.hair(pt)
-#    p2 = (pt[0]-60, pt[1]+20)
-#    p3 = (pt[0]+60, pt[1]+20)
-#    for _ in range(5):
-#        RandDraw.rand_curve(p2, p2, cx=(-30,-20), dx=(-50,0), dy=(80,200))
-#    for _ in range(5):
-#        RandDraw.rand_curve(p3, p3, cx=(20,30), dx=(0,50), dy=(80,200))
+    RandAnime.hair2(pt)
 
     
 

@@ -3,7 +3,7 @@ import turtle as te
 import time
 from __package__.te_draw import TE_Draw
  
-te.tracer(10)#用這行可瞬間作畫
+te.tracer(10) #用這行可瞬間作畫
 te.setup(TE_Draw.Width, TE_Draw.Height, 0, 0)
 te.pensize(1)
 te.speed('slow')
@@ -57,7 +57,7 @@ te.end_fill()
 TE_Draw.moveTo(195, 49)
 te.begin_fill()
 te.pencolor("#D3DFF0")
-TE_Draw.polyline([(195, 49), (175.5, 106.5), (202.522, 49)])
+TE_Draw.line([(195, 49), (175.5, 106.5), (202.522, 49)])
 te.pencolor("black")
 TE_Draw.horizontalTo(195)
 te.pencolor("#D3DFF0")
@@ -74,19 +74,6 @@ TE_Draw.lineTo(328, 49)
 te.pencolor("#D3DFF0")
 te.end_fill()
 
- 
-te.pencolor("black")
-TE_Draw.line(94.5, 397.5, 107.5, 373.5)  # 皱纹
-TE_Draw.line(122.5, 317.5, 95.875, 275)
-TE_Draw.line(122.5, 341.5, 141.5, 402.5)
-TE_Draw.line(141.5, 409.5, 153.5, 431.5)
-TE_Draw.line(340, 49, 360.5, 144)
-TE_Draw.line(478.5, 95.5, 518.5, 161.5)
-TE_Draw.line(518.5, 332.5, 460.5, 359.5)
-TE_Draw.polyline([(506.5, 369.5), (493.5, 402.5), (502.5, 443.5)])
-TE_Draw.moveTo(530, 429)
-TE_Draw.curveRel([(4, 16), (-5, 33)])
- 
 # 图层_3
 te.color("black", "#2b1d2a")  # 外套内侧
 TE_Draw.moveTo(225, 462)
@@ -289,7 +276,7 @@ te.end_fill()
  
 te.penup()
 te.begin_fill()
-TE_Draw.polyline([(349, 180), (353, 203), (361, 203), (362, 188), (349, 180)])
+TE_Draw.line([(349, 180), (353, 203), (361, 203), (362, 188), (349, 180)])
 te.end_fill()
 
 # 图层_13
@@ -414,35 +401,11 @@ TE_Draw.curveTo([(363, 224), (361, 225), (361, 227)])
 te.end_fill()
 
  
-# 图层_16
-te.pencolor("black")  # 眼睛(线条)
-te.pensize(3)
-TE_Draw.moveTo(225, 215)
-TE_Draw.curveRel([(10, 28), (22, 16), (24, 6)])
-TE_Draw.moveTo(365, 219)
-TE_Draw.curveRel([(4, 14), (18, 24), (22, -3)])
-te.pensize(2)
-TE_Draw.line(240.5, 207.5, 227.5, 211.5)
-TE_Draw.line(245.5, 209.5, 227.5, 214.5)
-TE_Draw.line(247.5, 211.5, 227.5, 217.5)
-TE_Draw.line(247.5, 214.5, 229.5, 220.5)
-TE_Draw.line(247.5, 218.5, 230.5, 223.5)
-TE_Draw.line(246.5, 222.5, 232.5, 226.5)
-TE_Draw.line(244.5, 225.5, 234.5, 228.5)
- 
-TE_Draw.line(377.5, 207.5, 367.5, 210.5)
-TE_Draw.line(384.5, 207.5, 366.5, 212.5)
-TE_Draw.line(385.5, 210.5, 366.5, 215.5)
-TE_Draw.line(384.5, 213.5, 366.5, 218.5)
-TE_Draw.line(384.5, 215.5, 367.5, 220.5)
-TE_Draw.line(384.5, 218.5, 368.5, 223.5)
-TE_Draw.line(382.5, 223.5, 370.5, 227.5)
-
 # 图层_20
 te.pencolor("black")
 TE_Draw.moveTo(309, 270)  # 鼻子、嘴
 TE_Draw.curveRel([(4, 7), (1, 9)])
-TE_Draw.line(296.5, 307.5, 303.5, 307.5)
+TE_Draw.line([(296.5, 307.5), (303.5, 307.5)])
 TE_Draw.moveTo(315, 307)
 TE_Draw.curveRel([(10, -1), (10, 2)])
  
