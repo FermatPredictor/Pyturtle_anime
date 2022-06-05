@@ -11,9 +11,11 @@ class TE_Draw():
     SVG座標指的是以左上角為(0, 0)的座標系統，
     x軸正方向是向右，y軸正方向是向下。
     """
-    WriteStep = 15  # 贝塞尔函数的取样次数
+    WriteStep = 15  # bezier函數的取樣次数
     Width = 600  # 界面宽度
     Height = 500  # 界面高度
+    
+    close_pt = (0,0) # 設定封閉區塗色
     
     @staticmethod
     def _one_bezier(p1, p2, t):
@@ -40,12 +42,12 @@ class TE_Draw():
         TE_Draw.moveTo(*points[0])
         for t in range(0, TE_Draw.WriteStep + 1):
             x, y = TE_Draw._bezier(np.array(points), t / TE_Draw.WriteStep)
-            TE_Draw.lineTo(x, y)
+            TE_Draw.lineTo([(x, y)])
         
     @staticmethod
     def curveTo(points):
         """
-        從當前點出發，依points方向畫bezier curve
+        從當前點出發，依絕對坐標畫bezier curve
         """
         TE_Draw.draw_bezier([TE_Draw.cur_svg()] + points)
         
@@ -83,8 +85,17 @@ class TE_Draw():
         # 畫svg坐標下的折線
         assert points
         TE_Draw.moveTo(*points[0])
+        te.pendown()
         for i in range(1, len(points)):
-            TE_Draw.lineTo(*points[i])
+            te.goto(*TE_Draw.svg_to_Cart(*points[i]))
+        te.penup()
+    
+    @staticmethod
+    def lineTo(points):
+        """
+        從當前點為基準，依絕對坐標畫折線
+        """
+        TE_Draw.line([TE_Draw.cur_svg()] + points)
 
     @staticmethod
     def lineRel(points):
@@ -92,15 +103,24 @@ class TE_Draw():
         從當前點為基準，依相對坐標畫折線
         """
         TE_Draw.line(list(accumulate([TE_Draw.cur_svg()]+points, func=lambda p1, p2: (p1[0]+p2[0], p1[1]+p2[1]))))
-
-
+        
     @staticmethod
-    def lineTo(x, y):
-        # 連接當前點svg坐標（x，y）
-        te.pendown()
-        te.goto(*TE_Draw.svg_to_Cart(x,y))
-        te.penup()
-    
+    def begin_fill(point):
+        """
+        移動至point，接下來圍住的區塊會填滿顏色
+        """
+        TE_Draw.moveTo(*point)
+        TE_Draw.close_pt = point
+        te.begin_fill()
+        
+    @staticmethod
+    def end_fill():
+        """
+        將區塊圍住填滿顏色，必與begin_fill成對出現
+        """
+        TE_Draw.lineTo([TE_Draw.close_pt])
+        te.end_fill()
+
     @staticmethod
     def horizontalTo(x): 
         # 畫水平線到x座標

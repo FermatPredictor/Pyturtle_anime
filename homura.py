@@ -11,8 +11,7 @@ te.penup()
  
 # 图层_2
 te.color("black", "#F2F2F2")  # 外套
-TE_Draw.moveTo(61, 462)
-te.begin_fill()
+TE_Draw.begin_fill((61, 462))
 TE_Draw.curveRel([(12, -41), (27, -58)])
 TE_Draw.curveRel([(-6, -36), (6, -118),(9, -132)])
 TE_Draw.curveRel([(-15, -27), (-23, -51),(-26, -74)])
@@ -27,8 +26,7 @@ TE_Draw.curveRel([(-29, -38), (-31, -46), (47, -153),(41,-165)])
 TE_Draw.curveTo([(355, 178), (340, 176), (272, 63), (264, 64)])
 TE_Draw.curveRel([(-29, 67), (-27, 73)])
 TE_Draw.curveTo([(99, 292), (174, 428), (173, 439),(165,462)])
-TE_Draw.lineTo(61, 462)
-te.end_fill()
+TE_Draw.end_fill()
  
 TE_Draw.moveTo(60.5, 461.5)  # 阴影
 te.color("black", "#D3DFF0")
@@ -64,15 +62,14 @@ te.pencolor("#D3DFF0")
 te.end_fill()
 
  
-TE_Draw.moveTo(328, 49)
-te.begin_fill()
+
+TE_Draw.begin_fill((328, 49))
 te.pencolor("#D3DFF0")
 TE_Draw.curveRel([(11, 121), (13, 128), (24, 130), (67,165)])
 TE_Draw.lineRel([(-40, -165)])
 te.pencolor("black")
-TE_Draw.lineTo(328, 49)
-te.pencolor("#D3DFF0")
-te.end_fill()
+TE_Draw.end_fill()
+
 
 # 图层_3
 te.color("black", "#2b1d2a")  # 外套内侧
@@ -85,34 +82,28 @@ TE_Draw.curveTo([(185, 305), (202, 428), (225, 462)])
 te.end_fill()
 
 
- 
-TE_Draw.moveTo(390, 462)
-te.begin_fill()
+TE_Draw.begin_fill((390, 462))
 TE_Draw.curveRel([(10, -23), (34, -180), (35, -222)])
 TE_Draw.curveRel([(7, 4), (54, 45), (61, 61),(-11,179)])
 TE_Draw.curveRel([(5, 15),(31, 45)])
-TE_Draw.lineTo(390, 462)
-te.end_fill()
+TE_Draw.end_fill()
 
 
 # 图层_4
 te.color("#2b1d29")  # 外套内侧
-TE_Draw.moveTo(225, 462)
-te.begin_fill()
+TE_Draw.begin_fill((225, 462))
 TE_Draw.curveRel([(-28, -50), (-40, -166), (-40, -250)])
 TE_Draw.curveRel([(6, 51), (-6, 87), (45, 106)])
 TE_Draw.curveRel([(64, 27), (89, 24)])
 TE_Draw.curveRel([(49, -18), (56, -20)])
 TE_Draw.curveRel([(50, -10), (51, -85)])
 TE_Draw.curveRel([(0, 29), (-25, 201), (-36, 225)])
-TE_Draw.lineTo(225, 462)
-te.end_fill()
+TE_Draw.end_fill()
 
 
 # 图层_5
 te.color("black", "#3D3D3D")  # 衣服
-TE_Draw.moveTo(225, 462)
-te.begin_fill()
+TE_Draw.begin_fill((225, 462))
 TE_Draw.curveRel([(-5, -5), (-22, -53), (-23, -70)])
 TE_Draw.lineRel([(32, -13)])
 TE_Draw.curveRel([(3, -25), (6, -28), (12, -36),(28,-48)])
@@ -122,8 +113,7 @@ TE_Draw.verticalRel(2)
 TE_Draw.curveRel([(8, -2), (17, 4), (17,10), (15,13)])
 TE_Draw.curveRel([(10, 10), (10, 29), (11, 33)])
 TE_Draw.curveRel([(25, 4), (8,82)])
-TE_Draw.lineTo(225, 462)
-te.end_fill()
+TE_Draw.end_fill()
 
 
 # 图层_6
@@ -143,8 +133,7 @@ te.end_fill()
 
 # 图层_7
 te.color("#E7F1FF")  # 白色褶皱
-TE_Draw.moveTo(225, 462)
-te.begin_fill()
+TE_Draw.begin_fill((225, 462))
 TE_Draw.lineRel([(-3, -5)])
 TE_Draw.curveRel([(4, -4), (5, -6), (21, -3), (24,-14)])
 TE_Draw.curveRel([(0, -7), (0, -11),(5,-19),(9,-16)])
@@ -154,8 +143,8 @@ TE_Draw.curveRel([(3, 15), (7, 18),(23, 22),(18,18)])
 TE_Draw.curveRel([(6, 4), (5, 9),(5,18)])
 TE_Draw.curveRel([(1, 7), (7, 6),(15,6)])
 TE_Draw.lineRel([(-2, 8)])
-TE_Draw.lineTo(225, 462)
-te.end_fill()
+TE_Draw.end_fill()
+
 
 te.pensize(2)
 TE_Draw.moveTo(240, 450)
@@ -166,8 +155,7 @@ te.pensize(1)
 
 # 图层_8
 te.color("black", "#A2B8D6")  # 衣领
-TE_Draw.moveTo(262, 331)
-te.begin_fill()
+TE_Draw.begin_fill((262, 331))
 TE_Draw.curveRel([(0, 8), (-1, 13), (0, 15),(45, 30)])
 TE_Draw.lineRel([(3, 12)])
 TE_Draw.horizontalRel(3)
@@ -243,18 +231,16 @@ TE_Draw.curveTo([(212, 168), (196, 189), (189, 202)])
 te.end_fill()
 
  
-TE_Draw.moveTo(221, 155)
-te.begin_fill()
+TE_Draw.begin_fill((221, 155))
 TE_Draw.curveRel([(-2, 6), (5, 48),(23,20),(25,0)])
 TE_Draw.curveRel([(-5, 24), (4, 43), (7, 50)])
 TE_Draw.curveRel([(-10, -49), (3, -72), (13, -106)])
 TE_Draw.curveRel([(-2, -7), (-3, -32), (-3, -35)])
 TE_Draw.curveRel([(-17, 18), (-27, 71)])
-TE_Draw.lineTo(221, 155)
-te.end_fill()
- 
-TE_Draw.moveTo(264, 64)
-te.begin_fill()
+TE_Draw.end_fill()
+
+
+TE_Draw.begin_fill((264, 64))
 TE_Draw.curveRel([(-4, 5), (14, 100)])
 TE_Draw.curveRel([(-6, -79), (-5, -85)])
 TE_Draw.curveRel([(0, 98), (49, 139)])
@@ -263,14 +249,11 @@ TE_Draw.curveTo([(272, 64), (264, 64)])
 te.end_fill()
 
  
-TE_Draw.moveTo(342, 176)
-te.begin_fill()
+TE_Draw.begin_fill((342, 176))
 TE_Draw.curveRel([(-1, 27), (-10, 57)])
 TE_Draw.curveRel([(20, -33), (17, -54)])
-TE_Draw.lineTo(342, 176)
-te.end_fill()
+TE_Draw.end_fill()
 
- 
 te.penup()
 te.begin_fill()
 TE_Draw.line([(349, 180), (353, 203), (361, 203), (362, 188), (349, 180)])
@@ -300,8 +283,7 @@ TE_Draw.curveTo([(206, 212)])
 te.end_fill()
 
  
-TE_Draw.moveTo(384, 204)
-te.begin_fill()
+TE_Draw.begin_fill((384, 204))
 te.pencolor("black")
 te.pensize(2)
 TE_Draw.curveRel([(-3, -1), (-18, -1),(-28, 1)])
@@ -313,8 +295,7 @@ TE_Draw.curveRel([(38, 6), (40, 4)])
 TE_Draw.curveRel([(10, -9), (13, -22)])
 te.pencolor("black")
 te.pensize(2)
-TE_Draw.lineTo(384, 204)
-te.end_fill()
+TE_Draw.end_fill()
 
 # 图层_15
 te.color("#0C1631", "#0C1631")  # 眼睛2
@@ -355,26 +336,22 @@ te.end_fill()
 
 # 图层_18
 te.color("#352F53")  # 眼睛4
-TE_Draw.moveTo(219, 229)
-te.begin_fill()
+TE_Draw.begin_fill((219, 229))
 TE_Draw.curveRel([(2, -5), (6, -4)])
 TE_Draw.curveRel([(18, 13), (27, 1)])
 TE_Draw.curveRel([(3, 0), (5, 3)])
 TE_Draw.verticalRel(13)
 TE_Draw.horizontalTo(224)
-TE_Draw.lineTo(219, 229)
-te.end_fill()
+TE_Draw.end_fill()
 
- 
-TE_Draw.moveTo(357, 227)
-te.begin_fill()
+
+TE_Draw.begin_fill((357, 227))
 TE_Draw.curveRel([(4, -6), (10, -2)])
 TE_Draw.curveRel([(10, 13), (19, 1)])
 TE_Draw.curveRel([(6, 0), (8, 6)])
 TE_Draw.lineRel([(-2, 9)])
 TE_Draw.curveRel([(-12, 3), (-29, 0), (-32, -2)])
-TE_Draw.lineTo(357, 227)
-te.end_fill()
+TE_Draw.end_fill()
 
 # 图层_19
 te.color("#9A90CB")  # 眼睛5

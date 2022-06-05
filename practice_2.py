@@ -40,14 +40,14 @@ def eye(x,y):
     te.pensize(1)
     TE_Draw.curveRel([(2, 27), (-1, 30)])
     TE_Draw.curveRel([(-39, 5), (-44, 1)])
-    TE_Draw.lineTo(x,y)
+    TE_Draw.lineTo([(x,y)])
     te.end_fill()
-    te.color("#0C1631")
     
+    te.color("#0C1631")    
     TE_Draw.moveTo(x+10,y-2)
     te.begin_fill()
     TE_Draw.lineRel([(45, 0), (-2, 33), (-36,0)])
-    TE_Draw.lineTo(x+10,y-2)
+    TE_Draw.lineTo([(x+10,y-2)])
     te.end_fill()
     
     te.color("white")
